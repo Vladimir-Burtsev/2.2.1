@@ -1,13 +1,13 @@
 package hiber.model;
 
 import javax.persistence.*;
+import java.util.Objects;
 
 @Entity
 @Table(name = "users")
 public class User {
    @OneToOne(cascade = CascadeType.ALL)
    @JoinColumn(name = "id_car")
-//   @PrimaryKeyJoinColumn
    private Car car;
 
    @Id
@@ -73,4 +73,27 @@ public class User {
       this.email = email;
    }
 
+   @Override
+   public String toString() {
+      return "User{" +
+              "car=" + car +
+              ", id=" + id +
+              ", firstName='" + firstName + '\'' +
+              ", lastName='" + lastName + '\'' +
+              ", email='" + email + '\'' +
+              '}';
+   }
+
+   @Override
+   public boolean equals(Object o) {
+      if (this == o) return true;
+      if (o == null || getClass() != o.getClass()) return false;
+      User user = (User) o;
+      return Objects.equals(car, user.car) && Objects.equals(id, user.id) && Objects.equals(firstName, user.firstName) && Objects.equals(lastName, user.lastName) && Objects.equals(email, user.email);
+   }
+
+   @Override
+   public int hashCode() {
+      return Objects.hash(car, id, firstName, lastName, email);
+   }
 }
